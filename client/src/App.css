@@ -1,0 +1,24 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+    .heroColor{
+        color: #8ED93F;
+    }
+    .subColor{
+        color: #edf3eff3;
+    }
+    .subColor2{
+        color: #708090ba;
+    }
+    .heroBG{
+        background-color: #8ED93F;
+    }
+    .subBG{
+        background-color: #edf3eff3;
+    }
+    .subBG2{
+        background-color: #708090ba;
+    }
+}
