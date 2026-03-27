@@ -15,7 +15,15 @@ import "./App.css"
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Marketplace from './Pages/Marketplace/Marketplace';
-
+import SingleProduct from './Pages/Marketplace/SingleProduct';
+import UserProfile from './Pages/Profile/UserProfile';
+import FarmerDashboard from './Pages/Dashboard/FarmerDashboard';
+import { AuthProvider } from './Context/AuthContext';
+import AddProduct from './Pages/Dashboard/AddProduct';
+import CropAIScanner from './Pages/Dashboard/CropAIScanner';
+import { CartProvider } from './Context/CartContext';
+import Cart from './Pages/Cart';
+import Checkout from './Pages/Checkout';
 
 const App = () => {
 useEffect(() => {
@@ -28,28 +36,34 @@ useEffect(() => {
 
   return (
     <>
-    <BrowserRouter>
-      <Nav/>
-      <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path='marketplace' element={<Marketplace/>} />
-
-        <Route element ={<FarmerProtectedRoute/>}>
-          <Route path="/dashboard/" element={<div>Farmer Dashboard</div>} />
-        </Route>
-        <Route element ={<BuyerProtectedRoute/>}>
-          <Route path="/cart" element={<div>Buyer Cart</div>} />
-        </Route>
-
-        <Route path="*" element={<NotFound />} />
-
-       </Routes>
-        <Footer/>
-    </BrowserRouter>
+    <AuthProvider>
+      <CartProvider>
+        <BrowserRouter>
+          <Nav/>
+          <Routes>
+            <Route path="/" element={<Home/>} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path='/marketplace' element={<Marketplace/>} />
+            <Route path="/marketplace/:id" element={<SingleProduct />} />
+            <Route element ={<FarmerProtectedRoute/>}>
+              <Route path="/dashboard" element={<FarmerDashboard />} />
+              <Route path="/dashboard/add-product" element={<AddProduct />} />
+              <Route path="/dashboard/crop-ai-scanner" element={<CropAIScanner />} />
+            </Route>
+            <Route element ={<BuyerProtectedRoute/>}>
+              <Route path="/profile" element={<UserProfile />} />
+              <Route path="/cart" element={<Cart />} />
+            </Route>
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <Footer/>
+        </BrowserRouter>
+      </CartProvider>
+    </AuthProvider>
     </>
   )
 }

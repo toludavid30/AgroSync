@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import "./Styling/Styling.css"
+import { useAuth } from '../Context/AuthContext';
 
 const Nav = () => {
+    const {isLoggedIn, logout} = useAuth();
   return (
     <div id='Navbar' className='py-3 subBG'>
         <div className="navWrapper container rounded rounded-5">
@@ -14,7 +16,17 @@ const Nav = () => {
                 <Link className='subColor' to="/about">About</Link>
                 <Link className='subColor' to="/contact">Contact</Link>
                 {/* <Link to="/signin">Sign In</Link> */}
-                <Link className='subColor' to="/signup">Sign Up</Link>
+                {
+                    isLoggedIn ? (
+                        <Link className='subColor' to="/signin" onClick={logout}>
+                            Log Out
+                        </Link>
+                    ) : (
+                        <Link className='subColor' to="/signup">Sign Up</Link>
+                    )
+
+                }
+                
             </div>
         </div>
     </div>

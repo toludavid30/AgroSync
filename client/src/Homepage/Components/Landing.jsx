@@ -63,7 +63,7 @@ const Landing = () => {
               </ul>
             </div>
             <div className="aiImage animated-float">
-              <img src="/public/ai-crop-demo.png" alt="AI Crop Analysis Demo" style={{ maxWidth: '320px', borderRadius: '1.5rem', boxShadow: '0 4px 24px #8ed93f22' }} />
+              <img src="/Maize seedling in cultivated agricultural field with graphic concepts modern agricultural technology, digital farm, smart farming innovation.jpg" alt="AI Crop Analysis Demo" style={{ maxWidth: '320px', borderRadius: '1.5rem', boxShadow: '0 4px 24px #8ed93f22' }} />
             </div>
           </div>
         </section>

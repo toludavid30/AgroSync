@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-
+import { useAuth } from '../Context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const signinSchema = yup.object({
     Email: yup.string().email("enter a valid email").required("email is required"),
@@ -12,7 +13,9 @@ const signinSchema = yup.object({
     Password: yup.string().required("password is required").min(6, "password must be atleast 6 characters")
 })
 const Signin = () => {
+  const { login, loading: authLoading, error: authError } = useAuth();
   const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate();
   
     // const [passwordConfirmed, setpasswordConfirmed] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
@@ -21,17 +24,6 @@ const Signin = () => {
       setShowPassword(!showPassword)
     }
   
-    // const confirmPassword = (e) => {
-    //   const password = document.getElementById("password").value
-    //   const confirmPassword = e.target.value
-    //   if (password !== confirmPassword) {
-    //     e.target.setCustomValidity("Passwords do not match")
-    //     setpasswordConfirmed(false)
-    //   } else {
-    //     e.target.setCustomValidity("")
-    //     setpasswordConfirmed(true)
-    //   }
-    // }
   
     const {register, handleSubmit, formState:{errors}} = useForm(
       {
@@ -39,9 +31,43 @@ const Signin = () => {
       }
     )
   
-    const handleSignUp = (data) => {
-      
-      setIsLoading(true)
+    const handleSignUp = async (data) => {
+      setIsLoading(true);
+      try {
+        const res = await login({
+          email: data.Email,
+          password: data.Password,
+        });
+        alert(res.message || 'Login successful!');
+        // Check user role and redirect accordingly
+        const token = localStorage.getItem('token');
+        if (token) {
+          const userRes = await fetch(`${import.meta.env.VITE_BASEURL}/users/me`, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+          if (userRes.ok) {
+            const userData = await userRes.json();
+            
+            if (userData.role === 'BUYER') {
+              navigate('/profile');
+            } else if (userData.role === 'FARMER') {
+              navigate('/dashboard');
+            } else {
+              navigate('/');
+            }
+          } else {
+            navigate('/');
+          }
+        } else {
+          navigate('/');
+        }
+      } catch (err) {
+        alert(err.message || 'Login failed!');
+      } finally {
+        setIsLoading(false);
+      }
     }
 
   return (
@@ -92,7 +118,7 @@ const Signin = () => {
                     <p className='text-danger'>{errors.Password.message}</p>
                     }
                 </div>
-                <button type="submit" className="btn subBG2 subColor btn-lg w-100"disabled = {isLoading}>Register</button>
+                <button type="submit" className="btn subBG2 subColor btn-lg w-100"disabled = {isLoading}>Sign In</button>
             </form>
               </div>
             </div>     

@@ -1,0 +1,118 @@
+.dashboard-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+}
+
+.dashboard-card {
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(60, 72, 100, 0.15);
+  padding: 2.5rem 2rem;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  animation: popIn 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  80% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-welcome, .dashboard-email, .dashboard-role {
+  font-size: 1.1rem;
+  color: #4a5568;
+  margin-bottom: 0.7rem;
+}
+
+.dashboard-loading, .dashboard-error {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #a0aec0;
+  margin-top: 4rem;
+}
+
+.dashboard-stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin: 1.5rem 0 1rem 0;
+}
+.dashboard-stat {
+  background: #f8fafc;
+  border-radius: 1rem;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(60, 72, 100, 0.07);
+  text-align: center;
+  flex: 1;
+}
+.stat-label {
+  display: block;
+  color: var(--subColor2, #708090ba);
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.dashboard-actions {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem 0 1rem 0;
+  justify-content: center;
+}
+.dashboard-actions button {
+  padding: 0.7rem 1.3rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.dashboard-section-title {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  color: var(--heroColor, #8ED93F);
+  font-weight: 600;
+}
+.dashboard-product-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0 0;
+}
+.dashboard-product-item {
+  display: flex;
+  justify-content: space-between;
+  background: #f8fafc;
+  border-radius: 0.7rem;
+  padding: 0.8rem 1.2rem;
+  margin-bottom: 0.7rem;
+  box-shadow: 0 1px 4px rgba(60, 72, 100, 0.05);
+}
+.dashboard-product-empty {
+  color: #a0aec0;
+  text-align: center;
+  padding: 1rem 0;
+}
+.product-title {
+  font-weight: 600;
+  color: #2d3748;
+}
+.product-meta {
+  color: #708090ba;
+  font-size: 0.98rem;
+}

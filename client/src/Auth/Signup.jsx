@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-
+import { useAuth } from '../Context/AuthContext'
+import { useNavigate } from 'react-router-dom';
 
 const signupSchema = yup.object({
-    Email: yup.string().email("enter a valid email").required("email is required"),
-    name: yup.string().required("name is required").min(3, "name must be at least 3 characters"),
-    Password: yup.string().required("password is required").min(6, "password must be atleast 6 characters")
+    email: yup.string().email("enter a valid email").required("email is required"),
+    fullName: yup.string().required("name is required").min(3, "name must be at least 3 characters"),
+    password: yup.string().required("password is required").min(6, "password must be atleast 6 characters")
 })
 
 const Signup = () => {
@@ -41,11 +42,28 @@ const Signup = () => {
     }
   )
 
-  const handleSignUp = (data) => {
+  const { signup, loading: authLoading, error: authError } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignUp = async (data) => {
     if (!passwordConfirmed) {
       return
     }
     setIsLoading(true)
+    try {
+      const res = await signup({
+        fullName: data.fullName,
+        email: data.email,
+        password: data.password,
+        role: data.role,
+      });
+      alert(res.message || 'Signup successful!');
+      navigate('/signin');
+    } catch (err) {
+      alert(err.message || 'Signup failed!');
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -67,22 +85,34 @@ const Signup = () => {
             <form className="container col-11 col-md-8 py-4 mx-auto d-flex flex-column gap-3" onSubmit={handleSubmit(handleSignUp)} action="">
             <div className="form-group">
                 <label htmlFor="name">Name</label>
-                <input type="text" {...register("name")} className="form-control form-control-md" id="name" placeholder="Enter your name"/>
-                {errors.name && 
-                <p className='text-danger'>{errors.name.message}</p>
+                <input type="text" {...register("fullName")} className="form-control form-control-md" id="name" placeholder="Enter your name"/>
+                {errors.fullName && 
+                <p className='text-danger'>{errors.fullName.message}</p>
                 }
             </div>
             <div className="form-group">
                 <label htmlFor="email">Email</label>
-                <input type="email" {...register("Email")} className="form-control form-control-md" id="email" placeholder="Enter your email"/>
-                {errors.Email && 
-                <p className='text-danger'>{errors.Email.message}</p>
+                <input type="email" {...register("email")} className="form-control form-control-md" id="email" placeholder="Enter your email"/>
+                {errors.email && 
+                <p className='text-danger'>{errors.email.message}</p>
                 }
+            </div>
+            <div className="form-group">
+                <label htmlFor="role">Role</label>
+                <select {...register("role")} className="form-control form-control-md" id="role">
+                    <option value="">Select your role</option>
+                    <option value="BUYER">Buyer</option>
+                    <option value="FARMER">Farmer</option>
+                </select>
+                {errors.role && 
+                <p className='text-danger'>{errors.role.message}</p>
+                }
+
             </div>
             <div className="form-group">
                 <label htmlFor="password">Password</label>
                 <div className="passwordContainer d-flex input-group">
-                <input type={showPassword ? "text" : "password"} {...register("Password")} className="form-control form-control-md" id="password" placeholder="Enter your password"/>
+                <input type={showPassword ? "text" : "password"} {...register("password")} className="form-control form-control-md" id="password" placeholder="Enter your password"/>
                 <span className='input-group-text' onClick={handlePassword}>
                     {showPassword ? (
                     <i class="fa-regular fa-eye-slash"></i> )
@@ -90,8 +120,8 @@ const Signup = () => {
                     }  
                 </span>
                 </div>
-                {errors.Password && 
-                <p className='text-danger'>{errors.Password.message}</p>
+                {errors.password && 
+                <p className='text-danger'>{errors.password.message}</p>
                 }
             </div>
             <div className="form-group">
