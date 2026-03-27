@@ -8,7 +8,6 @@ import { Role } from 'src/auth/Roles/role.enum';
 @UseGuards(JwtGuard, RolesGuard)
 export class UsersController {
 
-  @Roles(Role.Farmer)
   @Get('me')
   getUser(@Req() req: any) {
     return req.user!
