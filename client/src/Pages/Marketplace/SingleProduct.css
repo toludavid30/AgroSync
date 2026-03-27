@@ -1,0 +1,98 @@
+.single-product-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+  animation: fadeInBg 1s ease;
+}
+
+@keyframes fadeInBg {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.single-product-card {
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(60, 72, 100, 0.15);
+  padding: 2.5rem 2rem;
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: popIn 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  80% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.single-product-image {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 16px rgba(60, 72, 100, 0.08);
+  animation: popImage 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes popImage {
+  0% { transform: scale(0.7); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.single-product-details {
+  text-align: center;
+}
+
+.single-product-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.single-product-description {
+  font-size: 1.1rem;
+  color: #4a5568;
+  margin-bottom: 1.2rem;
+}
+
+.single-product-meta {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  font-size: 1rem;
+  color: #5a67d8;
+  font-weight: 500;
+}
+
+.single-product-loading, .single-product-error {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #a0aec0;
+  margin-top: 4rem;
+}
+
+.single-product-addcart {
+  margin-top: 1.2rem;
+  background: var(--subBG2, #708090ba);
+  color: var(--subColor, #fff);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.single-product-addcart:hover {
+  background: var(--heroColor, #8ED93F);
+  color: #fff;
+}
